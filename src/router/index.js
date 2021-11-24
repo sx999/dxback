@@ -1,29 +1,59 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-
+// import Home from '../views/Home.vue'
+import Index from '../views/Admin/Index.vue'
+import Home from '../views/Admin/Home.vue'
+import About from '../views/Admin/About.vue'
+import NoMatch from '../views/Admin/NoMatch.vue'
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    // name: 'Index',
+    component:Index,
+    children:[
+      {path:"home",component:Home},
+      {path:"",redirect:"home"},    //没有输入值时 重定向到home 页面
+      {path:"about",component:About},
+    ]
+  },
+  //登录
+  {
+    path:'/login',
+    name:'Login',
+    component: () => import('../views/User/Login.vue')
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+  	path:"*",
+  	component:() => import('../views/Admin/NoMatch.vue')
+  	// 配置404 页面  当访问路由path 值不存在时 跳转到NoMatch 组件
+  },
+  // {
+  //   path: '/about',
+  //   name: 'About',
+  //   // route level code-splitting
+  //   // this generates a separate chunk (about.[hash].js) for this route
+  //   // which is lazy-loaded when the route is visited.
+  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  // }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
+  // mode: 'history',
+  // base: process.env.BASE_URL,
   routes
 })
 
+ //路由守卫 
+//  router.beforeEach((to, from, next) => {
+//   // 如果用户访问的登录页，直接放行 
+//  if(to.path === '/login') return next()
+//   // 从 localStorage 中获取到 保存的 token 值 
+//  const tokenStr = sessionStorage.getItem('cat_token')
+//  // 没有token，强制跳转到登录页 
+//  if(!tokenStr)  next({path: '/login'})
+//  // 存在token 直接放行
+//  next()
+//  })
 export default router
