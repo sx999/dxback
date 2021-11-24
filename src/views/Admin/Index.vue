@@ -1,15 +1,18 @@
 <template>
     <div>   
-      <el-container>
+      <el-container class="main">
         <el-header class="header">
             <div class="header-list">
-              <div> 
-                 <i class="el-icon-menu" 
-                  :icon="isCollapse?'el-icon-menu':'el-icon-s-grid'"
+              <div class="logo">
+                <a href="">X-admin v2.2</a>
+              </div>
+              <div class="left_open"> 
+                 <i class="el-icon-s-fold" 
+                  :icon="isCollapse?'el-icon-s-fold':'el-icon-s-unfold'"
                   @click="isCollapse=!isCollapse"></i>
               </div>
-              <img src="../../assets/images/gg.png" style="width:48px" alt="无法显示图片">
               <div class="header-text">
+                  <img src="../../assets/images/gg.png" style="width:38px" alt="无法显示图片">
                   <span class="header-text-1">欢迎您，管理员:<span style="color:#4f5555;">{{username}}</span></span>
                   <span class="header-text-2" @click="Signout">退出</span>
               </div>
@@ -17,7 +20,7 @@
         </el-header>
         <el-container>
               <!-- 侧边导航 -->
-              <el-aside width="160px" :style="{'width':isCollapse ? '64px':'170px','background-color':'#545c64','overflow':'hidden'}">
+              <el-aside width="170px" :style="{'width':isCollapse ? '64px':'170px','background-color':'#545c64','overflow':'hidden'}">
                   <el-menu
                   :default-active="$route.path"
                   class="el-menu-vertical-demo"
@@ -39,6 +42,22 @@
                           <span slot="title" >测试标题2</span>
                       </el-menu-item>
                       <el-submenu index="3">
+                            <template slot="title">
+                              <i class="el-icon-s-promotion" ></i>
+                              <span slot="title">测试标题3</span>
+                            </template>
+                          <el-menu-item index="1-1">选项1</el-menu-item>
+                          <el-menu-item index="1-2">选项2</el-menu-item>
+                      </el-submenu>
+                       <el-submenu index="4">
+                            <template slot="title">
+                              <i class="el-icon-s-promotion" ></i>
+                              <span slot="title">测试标题3</span>
+                            </template>
+                          <el-menu-item index="1-1">选项1</el-menu-item>
+                          <el-menu-item index="1-2">选项2</el-menu-item>
+                      </el-submenu>
+                       <el-submenu index="5">
                             <template slot="title">
                               <i class="el-icon-s-promotion" ></i>
                               <span slot="title">测试标题3</span>
@@ -105,15 +124,15 @@ export default {
       background: linear-gradient(to left,rgba(1, 170, 237, 1), rgba(82, 183, 109, 1)) !important;
     }
     .center{
-      width: 98%;
+      width: 100%;
       margin-top: 10px;
-      margin-left: 30px;
+      margin-left: 10px;
       padding: 10px;
       border-radius: 4px 0;
       /* background-color: #dbe6f6; */
-      background-color: #FFFFFF;
-      box-shadow: 0px 0px 4px #c7c7c7;
-      overflow-y: hidden;
+      /* background-color: #FFFFFF;
+      box-shadow: 0px 0px 4px #c7c7c7; */
+      /* overflow-y: hidden; */
     }
     .bottom{
       margin:  0 0 0 30px;
@@ -123,23 +142,21 @@ export default {
       line-height: 60px;
     }
     .el-menu{
+
+        height: 700px;
+        overflow: hidden;
         border-right: 0px !important; 
     }
     .el-menu-item, .el-submenu__title{
         height: 48px !important;
         line-height: 48px !important;
     }
-     .header-list{
-        display: flex;
-        align-items: center;
+    .el-header{
+      padding: 0
     }
-    .header-text{
-        margin-left: 40px;
-        color: #fff;
+    .el-aside{
+      transition: all .3s;
+      -webkit-transition: all .3s;
     }
-    .header-text span:nth-child(2){
-        margin-left: 15px;
-        color: #5e7c85;
-        cursor: pointer;
-    }
+    @import "../../assets/css/index-header.css";
 </style>
