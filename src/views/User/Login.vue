@@ -22,7 +22,7 @@
                     </Input>
                 </FormItem>
                 <FormItem>
-                    <Button type="primary" @click="handleSubmit('formInline')">登录</Button>
+                    <Button type="primary" @click="handleSubmit('formInline')" >登录</Button>
                 </FormItem>
                 </Form>
             </div>
@@ -49,16 +49,37 @@
                 }
             }
         },
+        mounted(){
+
+		},
+		destroyed() {
+		   
+		},
         methods: {
             handleSubmit(name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        this.$Message.success('Success!');
+                        this.axios.post(this.$api_router.login+'?adminAccount='+this.formInline.user+'&adminPassword='+this.formInline.password)
+                        .then(res=>{
+                            console.log("登录信息:",res)
+                            if(res.data.code == 200){
+                                this.$Message.success('登录成功!');
+                                //登录成功保存登录信息
+								localStorage.setItem("username",res.data.data.adminName);
+								//保存唯一id
+								localStorage.setItem("userid",res.data.data.adminId);
+								//保存一个登录数据token
+								window.sessionStorage.setItem('cat_token', res.data.data.token)
+								this.$router.push({path:"/"})
+                            }else{
+                                this.$Message.error(res.data.msg);
+                            }
+                        }) 
                     } else {
-                        this.$Message.error('Fail!');
+                        this.$Message.error('账号密码错误!');
                     }
                 })
-            }
+            },
         }
     }
 </script>

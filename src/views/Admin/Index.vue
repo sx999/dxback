@@ -18,7 +18,7 @@
               </div>
           </div>
         </el-header>
-        <el-container>
+        <el-container class="container">
               <!-- 侧边导航 -->
               <el-aside width="170px" :style="{'width':isCollapse ? '64px':'170px','background-color':'#545c64','overflow':'hidden'}">
                   <el-menu
@@ -28,43 +28,56 @@
                   background-color="#545c64"
                   text-color="#fff"
                   active-text-color="#409EFF"
+                  unique-opened="true"
                   :router="true">
                       <el-menu-item  index="/home">
                           <i class="el-icon-s-home"></i>
                           <span slot="title">首页</span>
                       </el-menu-item>
-                      <el-menu-item index="1">
+                      <el-menu-item index="/about">
                           <i class="el-icon-picture"></i>
                           <span slot="title">测试标题1</span>
                       </el-menu-item>
-                      <el-menu-item index="2">
-                          <i class="el-icon-s-custom"></i>
-                          <span slot="title" >测试标题2</span>
+                      <el-submenu index="/content">
+                            <template slot="title">
+                              <i class="el-icon-tickets" ></i>
+                              <span slot="title">文章管理</span>
+                            </template>
+                          <el-menu-item index="/content/companyprofile">企业介绍</el-menu-item>
+                          <el-menu-item index="/content/industry">行业资讯</el-menu-item>
+                      </el-submenu>
+                       <el-submenu index="/product">
+                            <template slot="title">
+                              <i class="el-icon-s-promotion" ></i>
+                              <span slot="title">产品详情</span>
+                            </template>
+                          <el-menu-item index="/product/device">智能设备</el-menu-item>
+                          <el-menu-item index="/product/advantage">产品优势</el-menu-item>
+                          <el-menu-item index="/product/featurefun">特色功能介绍</el-menu-item>
+                          <el-menu-item index="/product/solution">解决方案</el-menu-item>
+                      </el-submenu>
+                      <el-submenu index="/message">
+                            <template slot="title">
+                              <i class="el-icon-s-comment" ></i>
+                              <span slot="title">信息管理</span>
+                            </template>
+                          <el-menu-item index="/message/apply">报名查询</el-menu-item>
+                          <el-menu-item index="/message/attract">招商管理</el-menu-item>
+                          <el-menu-item index="/message/cooperative">合作单位</el-menu-item>
+                      </el-submenu>
+                      <el-submenu index="/picture">
+                            <template slot="title">
+                              <i class="el-icon-picture"></i>
+                              <span slot="title">图片处理</span>
+                            </template>
+                          <el-menu-item index="/picture/brochure">宣传册</el-menu-item>
+                          <el-menu-item index="/picture/banner">轮播图</el-menu-item>
+                      </el-submenu>
+                       <el-menu-item index="/system">
+                          <i class="el-icon-setting"></i>
+                          <span slot="title">系统设置</span>
                       </el-menu-item>
-                      <el-submenu index="3">
-                            <template slot="title">
-                              <i class="el-icon-s-promotion" ></i>
-                              <span slot="title">测试标题3</span>
-                            </template>
-                          <el-menu-item index="1-1">选项1</el-menu-item>
-                          <el-menu-item index="1-2">选项2</el-menu-item>
-                      </el-submenu>
-                       <el-submenu index="4">
-                            <template slot="title">
-                              <i class="el-icon-s-promotion" ></i>
-                              <span slot="title">测试标题3</span>
-                            </template>
-                          <el-menu-item index="1-1">选项1</el-menu-item>
-                          <el-menu-item index="1-2">选项2</el-menu-item>
-                      </el-submenu>
-                       <el-submenu index="5">
-                            <template slot="title">
-                              <i class="el-icon-s-promotion" ></i>
-                              <span slot="title">测试标题3</span>
-                            </template>
-                          <el-menu-item index="1-1">选项1</el-menu-item>
-                          <el-menu-item index="1-2">选项2</el-menu-item>
-                      </el-submenu>
+                      
                   </el-menu>
               </el-aside>
               <!-- 子路由内容切换 -->
@@ -127,7 +140,7 @@ export default {
       width: 100%;
       margin-top: 10px;
       margin-left: 10px;
-      padding: 10px;
+      /* padding: 10px; */
       border-radius: 4px 0;
       /* background-color: #dbe6f6; */
       /* background-color: #FFFFFF;
@@ -157,6 +170,13 @@ export default {
     .el-aside{
       transition: all .3s;
       -webkit-transition: all .3s;
+    }
+    .container{
+      overflow: hidden;
+    }
+    .el-main {
+      padding: 0 !important;
+      overflow-y:auto !important;
     }
     @import "../../assets/css/index-header.css";
 </style>
