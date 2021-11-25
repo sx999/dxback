@@ -1,6 +1,10 @@
 <template>
     <div>
-        <h1>合作单位/企业荣耀</h1>
+        <el-breadcrumb separator="/">
+            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: '/content' }"><a href="javascript:;">信息管理</a></el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: '/content/cooperative' }"><a href="javascript:;">合作单位</a></el-breadcrumb-item>
+        </el-breadcrumb>
     </div>
 </template>
 <script>

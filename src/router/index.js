@@ -45,6 +45,7 @@ const routes = [
       {path:"about",component:About},
       {path:"product",component:Product,
       children:[
+        {path:"",redirect:"advantage"}, 
         {path:"advantage",component:Advantage},
         {path:"featurefun",component:Featurefun},
         {path:"device",component:Device},
@@ -52,16 +53,19 @@ const routes = [
       ]},
       {path:"picture",component:Picture,
       children:[
+        {path:"",redirect:"brochure"}, 
         {path:"banner",component:Banner},
         {path:"brochure",component:Brochure},
       ]},
       {path:"content",component:Content,
       children:[
+        {path:"",redirect:"companyprofile"}, 
         {path:"companyprofile",component:CompanyProfile},
         {path:"industry",component:Industry},
       ]},
       {path:"message",component:Message,
       children:[
+        {path:"",redirect:"apply"}, 
         {path:"apply",component:Apply},
         {path:"attract",component:Attract},
         {path:"cooperative",component:Cooperative},

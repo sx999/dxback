@@ -1,5 +1,6 @@
 <template>
     <div class="Home-box">
+        
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-body ">
@@ -90,9 +91,12 @@ export default {
     },
     created(){},
     mounted(){
-        this.getCurrentTime()
+        this.timer = setInterval(() => {
+                this.getCurrentTime() // 修改数据date
+        }, 1000)
     },
     methods:{
+        
          //获取当前时间
         getCurrentTime() {
             var _this = this;
@@ -107,7 +111,12 @@ export default {
         },
 
 
+    },
+    beforeDestroy() {
+    if (this.timer) {
+      clearInterval(this.timer); // 在Vue实例销毁前，清除我们的定时器
     }
+  }
 }
 </script>
 <style scoped>

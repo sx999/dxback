@@ -11,6 +11,11 @@
                   :icon="isCollapse?'el-icon-s-fold':'el-icon-s-unfold'"
                   @click="isCollapse=!isCollapse"></i>
               </div>
+              <div class="left_open"> 
+                  <router-link to="/home">
+                    <i class="el-icon-s-home"></i>
+                  </router-link>
+              </div>
               <div class="header-text">
                   <img src="../../assets/images/gg.png" style="width:38px" alt="无法显示图片">
                   <span class="header-text-1">欢迎您，管理员:<span style="color:#4f5555;">{{username}}</span></span>
@@ -28,7 +33,7 @@
                   background-color="#545c64"
                   text-color="#fff"
                   active-text-color="#409EFF"
-                  unique-opened="true"
+                  :unique-opened="true"
                   :router="true">
                       <el-menu-item  index="/home">
                           <i class="el-icon-s-home"></i>
@@ -155,7 +160,6 @@ export default {
       line-height: 60px;
     }
     .el-menu{
-
         height: 700px;
         overflow: hidden;
         border-right: 0px !important; 
