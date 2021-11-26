@@ -5,7 +5,7 @@
 .header-list .logo a{
     float: left;
     font-size: 18px;
-    padding-left: 20px;
+    padding-left: 26px;
     line-height: 45px;
     width: 170px;
     color: rgb(255, 255, 255) !important;
@@ -31,6 +31,9 @@
     align-items: center;
     margin-left: 100px;
     color: #fff;
+}
+.header-text img{
+    margin-right: 10px;
 }
 .header-text .header-text-2{
     margin-left: 15px;

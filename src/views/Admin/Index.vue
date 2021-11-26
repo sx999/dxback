@@ -4,7 +4,7 @@
         <el-header class="header">
             <div class="header-list">
               <div class="logo">
-                <a href="">X-admin v2.2</a>
+                <a href="">DuXiuKeJi</a>
               </div>
               <div class="left_open"> 
                  <i class="el-icon-s-fold" 
@@ -18,7 +18,7 @@
               </div>
               <div class="header-text">
                   <img src="../../assets/images/gg.png" style="width:38px" alt="无法显示图片">
-                  <span class="header-text-1">欢迎您，管理员:<span style="color:#4f5555;">{{username}}</span></span>
+                  <span class="header-text-1">欢迎您，管理员:<span style="color:#4f5555;">&nbsp; {{username}}</span></span>
                   <span class="header-text-2" @click="Signout">退出</span>
               </div>
           </div>
@@ -56,10 +56,10 @@
                               <i class="el-icon-s-promotion" ></i>
                               <span slot="title">产品详情</span>
                             </template>
-                          <el-menu-item index="/product/device">智能设备</el-menu-item>
-                          <el-menu-item index="/product/advantage">产品优势</el-menu-item>
-                          <el-menu-item index="/product/featurefun">特色功能介绍</el-menu-item>
-                          <el-menu-item index="/product/solution">解决方案</el-menu-item>
+                          <el-menu-item index="/product/device" disabled>智能设备</el-menu-item>
+                          <el-menu-item index="/product/advantage" disabled>产品优势</el-menu-item>
+                          <el-menu-item index="/product/featurefun">功能介绍</el-menu-item>
+                          <el-menu-item index="/product/solution" disabled>解决方案</el-menu-item>
                       </el-submenu>
                       <el-submenu index="/message">
                             <template slot="title">

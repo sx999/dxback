@@ -113,10 +113,10 @@ export default {
 
     },
     beforeDestroy() {
-    if (this.timer) {
-      clearInterval(this.timer); // 在Vue实例销毁前，清除我们的定时器
+        if (this.timer) {
+        clearInterval(this.timer); // 在Vue实例销毁前，清除我们的定时器
+        }
     }
-  }
 }
 </script>
 <style scoped>

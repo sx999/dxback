@@ -5,7 +5,7 @@ export const APIROUTER = {
         // 登录
         'login':  api + '/NewAdminController/getAdmin',
         //图片上传
-        'upimg':api+'/PicFileController/uploadPicture',
+        'upImg':api+'/PicFileController/uploadPicture',
         //产品优势
         'product':api+'/AdvantageController/',
         //企业介绍
@@ -13,7 +13,7 @@ export const APIROUTER = {
         //合作单位
         'cooperator':api+'/MergeController/',
         //合伙人报名
-        'company':api+'/ApplyController/',
+        'apply':api+'/ApplyController/',
         //应用场景
         'scene':api+'/SceneController/',
         //宣传册
