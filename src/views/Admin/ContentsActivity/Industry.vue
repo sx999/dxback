@@ -34,8 +34,8 @@
                         width="180">
                     </el-table-column>
                     <el-table-column
-                        prop="updateTime"
-                        label="更新时间"
+                        prop="newsDate"
+                        label="发布时间"
                         width="160">
                     </el-table-column>
                     <!-- <el-table-column
@@ -106,9 +106,9 @@
                     <el-form-item label="新闻标题" prop="newsTitle">
                         <el-input v-model="ruleForm.newsTitle" placeholder="请输入标题"></el-input>
                     </el-form-item>
-                     <!-- <el-form-item label="发布时间" prop="newsDate" required>
+                    <el-form-item label="发布时间" prop="newsDate" required>
                         <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.newsDate" style="width: 50%;"></el-date-picker>
-                    </el-form-item> -->
+                    </el-form-item>
                     <el-form-item label="新闻描述" prop="newsDesc">
                         <el-input v-model="ruleForm.newsDesc" placeholder="请输入简述"></el-input>
                     </el-form-item>
@@ -131,7 +131,7 @@
                     </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
-                    <el-button @click="dialogVisible=false" size="small">取 消</el-button>
+                    <el-button @click="Cancel()" size="small">取 消</el-button>
                     <el-button class="backg" type="primary" size="small"  icon="el-icon-check" @click="Affirm('ruleForm')">确 定</el-button>
                 </span>
             </el-dialog>
@@ -147,9 +147,9 @@
                     <el-form-item label="新闻描述" prop="newsDesc">
                         <el-input v-model="information.newsDesc" placeholder="请输入新闻描述"></el-input>
                     </el-form-item>
-                    <!-- <el-form-item label="发布时间" prop="newsDate" required>
+                    <el-form-item label="发布时间" prop="newsDate" required>
                         <el-date-picker type="date" placeholder="选择日期" v-model="information.newsDate" style="width: 50%;"></el-date-picker>
-                    </el-form-item> -->
+                    </el-form-item>
                     <el-form-item label="上传图片" class="block">
                         <input class="file-input" type="file" @change="updateFace($event)" ref="inputer0"  multiple accept="image/png,image/jpeg,image/jpg"/>
                     </el-form-item>
@@ -169,7 +169,7 @@
                     </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
-                    <el-button @click="dialogVisibles=false" size="small">取 消</el-button>
+                    <el-button @click=" Cancel()" size="small">取 消</el-button>
                     <el-button class="backg" type="primary" size="small"  icon="el-icon-check" @click="Affirm1('information')">保 存</el-button>
                 </span>
             </el-dialog>
@@ -248,7 +248,7 @@ export default {
             this.loading = true
             this.axios.post(this.$api_router.industry+'findAll')
             .then(res=>{
-                // console.log(res)
+                console.log(res)
                 if(res.data.code == 200){
                         this.tableData = res.data.data
                         // this.$Message.success('查询完成!');
@@ -377,6 +377,11 @@ export default {
                 this.Queryall() 
             }, 2000)
             // clearInterval(this.timer);
+        },
+        Cancel(){
+            this.dialogVisible=false
+            this.dialogVisibles=false
+            this.Queryall()
         },
         onEditorBlur(){//失去焦点事件
         },

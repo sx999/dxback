@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>请先点击图片查看 更改模块!</h2>
+        <!-- <h2>请先点击图片查看 更改模块!</h2> -->
 
         <div>
             <router-view></router-view>

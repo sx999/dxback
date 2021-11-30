@@ -67,7 +67,7 @@
                               <span slot="title">信息管理</span>
                             </template>
                           <el-menu-item index="/message/apply">报名查询</el-menu-item>
-                          <el-menu-item index="/message/attract">招商管理</el-menu-item>
+                          <el-menu-item index="/message/attract" disabled>招商管理</el-menu-item>
                           <el-menu-item index="/message/cooperative">合作单位</el-menu-item>
                       </el-submenu>
                       <el-submenu index="/picture">
@@ -80,7 +80,7 @@
                       </el-submenu>
                        <el-menu-item index="/system">
                           <i class="el-icon-setting"></i>
-                          <span slot="title">系统设置</span>
+                          <span slot="title">系统配置</span>
                       </el-menu-item>
                       
                   </el-menu>
