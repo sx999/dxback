@@ -24,8 +24,9 @@
                 <el-table
                 v-loading="loading"
                 :data="ftableData"
+                :default-sort = "{prop: 'newsDate', order: 'descending'}"
                 border
-                max-height="500"
+                max-height="540"
                 size="small"
                 style="width: 100%">
                     <el-table-column
@@ -35,6 +36,7 @@
                     </el-table-column>
                     <el-table-column
                         prop="newsDate"
+                         sortable
                         label="发布时间"
                         width="160">
                     </el-table-column>
@@ -53,7 +55,7 @@
                         prop="newsDesc"
                         show-overflow-tooltip
                         label="新闻描述"
-                        width="160">
+                        width="300">
                     </el-table-column>
                     <el-table-column
                         prop="newsRate"
@@ -63,22 +65,26 @@
                     <el-table-column
                         prop="newsContent"
                         label="新闻内容"
-                        width="400">
+                        width="300">
                     </el-table-column>
                     <el-table-column
-                        label="图片链接"
+                        label="封面图片链接"
                         show-overflow-tooltip
                         min-width="200">
                         <template slot-scope="scope">
-                            <el-link type="primary" :underline="false" :href="scope.row.newsImagePath"  target="_blank" class="cell">
-                                {{scope.row.newsImagePath}}
-                                <!-- <el-image
-                                    style="width: 100px; height: 100px"
-                                    :src="scope.row.firmPic"
+                             <el-popover trigger="hover" placement="bottom" width="240">
+                                <el-image
+                                    :src="scope.row.newsImagePath"
                                     :fit="fits.contain"
                                    >
-                                </el-image> -->
-                            </el-link>
+                                </el-image>
+                                <div slot="reference" class="name-wrapper">
+                                    <el-link type="primary" :underline="false" :href="scope.row.newsImagePath"  target="_blank" class="cell">
+                                        {{scope.row.newsImagePath}}
+                                    </el-link>
+                                </div>
+                            </el-popover>
+                           
                         </template> 
                     </el-table-column>
                     <el-table-column 
@@ -102,7 +108,7 @@
             :visible.sync="dialogVisible" 
             width="50%" 
             :close-on-click-modal="false">
-                <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm">
+                <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="90px" class="demo-ruleForm">
                     <el-form-item label="新闻标题" prop="newsTitle">
                         <el-input v-model="ruleForm.newsTitle" placeholder="请输入标题"></el-input>
                     </el-form-item>
@@ -112,10 +118,10 @@
                     <el-form-item label="新闻描述" prop="newsDesc">
                         <el-input v-model="ruleForm.newsDesc" placeholder="请输入简述"></el-input>
                     </el-form-item>
-                    <el-form-item label="上传图片" class="block">
+                    <el-form-item label="上传图片"  class="block">
                         <input type="file" @change="updateFace($event)" ref="inputer0"  multiple accept="image/png,image/jpeg,image/jpg"/>
                     </el-form-item>
-                    <el-form-item label="预览图片:" class="block">
+                    <el-form-item label="预览图片:" prop="newsImagePath" class="block">
                         <el-link type="success" :underline="false" :href="ruleForm.newsImagePath"  target="_blank"  >
                             <img :src="ruleForm.newsImagePath" alt="" width="100">
                         </el-link>
@@ -140,7 +146,7 @@
             :visible.sync="dialogVisibles" 
             width="50%" 
             :close-on-click-modal="false">
-                <el-form :model="information" :rules="rules" ref="information" label-width="80px" class="demo-ruleForm">
+                <el-form :model="information" :rules="rules" ref="information" label-width="90px" class="demo-ruleForm">
                     <el-form-item label="新闻标题" prop="newsTitle">
                         <el-input v-model="information.newsTitle" placeholder="请输入新闻标题"></el-input>
                     </el-form-item>
@@ -153,7 +159,7 @@
                     <el-form-item label="上传图片" class="block">
                         <input class="file-input" type="file" @change="updateFace($event)" ref="inputer0"  multiple accept="image/png,image/jpeg,image/jpg"/>
                     </el-form-item>
-                    <el-form-item label="预览图片">
+                    <el-form-item label="预览图片" prop="newsImagePath">
                         <el-link type="success" :underline="false" :href="information.newsImagePath"  target="_blank">
                             <img :src="information.newsImagePath" alt="" width="100" class="block-image">
                         </el-link>
@@ -173,6 +179,15 @@
                     <el-button class="backg" type="primary" size="small"  icon="el-icon-check" @click="Affirm1('information')">保 存</el-button>
                 </span>
             </el-dialog>
+            <div class="block">
+                <el-pagination
+                @current-change="getLista($event)"
+                :current-page="this.pageData.currentPage"
+                :page-size="this.pageData.pageSize"
+                layout="prev, pager, next"
+                :total="this.pageData.totalRecord">
+                </el-pagination>
+		    </div>
         </div>
     </div>
 </template>
@@ -193,11 +208,12 @@ export default {
                 newsIsCheck: 0,
                 newsIsTop: 0,
                 newsImagePath:"",
-                // newsDate:""
+                newsDate:""
             },  
             search:{
                 newsTitle:""
             },
+            pageData:{},  //页数数据
             editorOption: {},
             detail:"",
             ruleForm:{},
@@ -209,9 +225,9 @@ export default {
                 newsDesc:[
                     {required: true, message: '简述不能为空', trigger: 'blur'}
                 ],
-                // newsDate:[
-                //     { required: true, message: '请选择日期', trigger: 'blur' }
-                // ],
+                newsDate:[
+                    { required: true, message: '请选择日期', trigger: 'blur' }
+                ],
                 newsImagePath:[
                     {required: true, message: '封面图文件不存在', trigger: 'blur'}
                 ],
@@ -243,14 +259,36 @@ export default {
 			},
     },
     methods:{
-        // 查询全部
-        Queryall(){
-            this.loading = true
-            this.axios.post(this.$api_router.industry+'findAll')
+        //分页
+        getLista(event){
+            console.log(event)
+             this.axios.post(this.$api_router.industry+'list?currentPage='+event+'&limit=8')
             .then(res=>{
                 console.log(res)
                 if(res.data.code == 200){
-                        this.tableData = res.data.data
+						this.tableData =  res.data.data.page.dataList
+                        this.pageData =  res.data.data.page
+						// this.$message({
+						//   message: '查询成功',
+						//   type: 'success'
+						// });
+                        this.Dateformatting()
+						this.loading = false
+                }else{
+                    this.$Message.warning(res.data.msg);
+                    return false
+                }
+            })
+	    },
+        // 查询全部
+        Queryall(){
+            this.loading = true
+            this.axios.post(this.$api_router.industry+'list?currentPage=1&limit=8')
+            .then(res=>{
+                console.log(res)
+                if(res.data.code == 200){
+                        this.tableData = res.data.data.page.dataList
+                        this.pageData =  res.data.data.page
                         // this.$Message.success('查询完成!');
                         this.Dateformatting()  
                         this.loading = false
@@ -266,6 +304,8 @@ export default {
             this.information.newsContent="",
             this.information.newsDesc="",
             this.information.newsTitle="",
+            this.information.newsDate="",
+            this.information.newsImagePath="",
             // this.information.newsRate=""
             this.file = ""
         },
@@ -367,7 +407,7 @@ export default {
                 // this.tableData[i].startTime = this.moment(this.tableData[i].startTime).format("YYYY-MM-DD HH:mm:ss")
                 // this.tableData[i].endTime = this.moment(this.tableData[i].endTime).format("YYYY-MM-DD HH:mm:ss")
                 
-               //this.tableData[i].newsDate = this.moment(this.tableData[i].newsDate).format("YYYY-MM-DD HH:mm:ss")
+               this.tableData[i].newsDate = this.moment(this.tableData[i].newsDate).format("YYYY-MM-DD")
             }
         },
         //刷新
@@ -403,5 +443,11 @@ export default {
         right: 10%;
         /* margin-right: 50px; */
         /* float: right; */
+    }
+    .boxdetail .block{
+        position: fixed;
+        bottom: 30px;
+        left: 200px;
+
     }
 </style>

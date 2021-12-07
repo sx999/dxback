@@ -57,9 +57,10 @@
                               <span slot="title">产品详情</span>
                             </template>
                           <el-menu-item index="/product/device" disabled>智能设备</el-menu-item>
-                          <el-menu-item index="/product/advantage" disabled>产品优势</el-menu-item>
+                          <el-menu-item index="/product/advantage">产品优势</el-menu-item>
                           <el-menu-item index="/product/featurefun">功能介绍</el-menu-item>
-                          <el-menu-item index="/product/solution" disabled>解决方案</el-menu-item>
+                          <el-menu-item index="/product/solution">解决方案</el-menu-item>
+                          <el-menu-item index="/product/solutionmenu">解决方案菜单</el-menu-item>
                       </el-submenu>
                       <el-submenu index="/message">
                             <template slot="title">

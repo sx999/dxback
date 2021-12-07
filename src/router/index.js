@@ -17,6 +17,7 @@ import Device from '../views/Admin/ProductDetails/Device.vue'
 import Featurefun from '../views/Admin/ProductDetails/Featurefun.vue'
 import Advantage from '../views/Admin/ProductDetails/Advantage.vue'
 import Solution from '../views/Admin/ProductDetails/Solution.vue'
+import Solutionmenu from '../views/Admin/ProductDetails/Solutionmenu.vue'
 //文章管理
 import Content from '../views/Admin/ContentsActivity/index.vue'
 import CompanyProfile from '../views/Admin/ContentsActivity/CompanyProfile.vue'
@@ -50,6 +51,7 @@ const routes = [
         {path:"featurefun",component:Featurefun},
         {path:"device",component:Device},
         {path:"solution",component:Solution},
+        {path:"solutionmenu",component:Solutionmenu},
       ]},
       {path:"picture",component:Picture,
       children:[

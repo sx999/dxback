@@ -3,13 +3,6 @@
         <el-link type="primary" :underline="false" :href="url"  target="_blank" class="cell">
                   <h2 style="marginBottom:20px">点我查看修改模块</h2>  
         </el-link>
-         <!-- <div class="module-img">
-            <el-image 
-                style="width: 200px; height: 100px"
-                :src="url" 
-                :preview-src-list="srcList">
-            </el-image>
-        </div> -->
         <el-breadcrumb separator="/">
             <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
             <el-breadcrumb-item :to="{ path: '/product/' }"><a href="javascript:;">产品详情</a></el-breadcrumb-item>

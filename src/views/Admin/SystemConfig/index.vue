@@ -54,6 +54,11 @@
                         show-overflow-tooltip
                         width="180">
                     </el-table-column>
+                     <el-table-column
+                        prop="sysAddress"
+                        label="公司地址"
+                        width="180">
+                    </el-table-column>
                     <el-table-column
                         prop="sysysAccount"
                         label="公众号二维码地址"
@@ -171,7 +176,7 @@
                         <el-input v-model="ruleForm.sysEmail" placeholder="请输入电子邮箱"></el-input>
                     </el-form-item>
                     <el-form-item label="联系电话" prop="sysPhone">
-                        <el-input v-model.number="ruleForm.sysPhone" placeholder="请输入联系电话"></el-input>
+                        <el-input v-model="ruleForm.sysPhone" placeholder="请输入联系电话"></el-input>
                     </el-form-item>
                     <el-form-item label="官网链接" prop="sysWebsite">
                         <el-input v-model="ruleForm.sysWebsite" placeholder="请输入链接"></el-input>
@@ -220,7 +225,7 @@
                         <el-input v-model="information.sysEmail" placeholder="请输入电子邮箱"></el-input>
                     </el-form-item>
                     <el-form-item label="联系电话" prop="sysPhone">
-                        <el-input v-model.number="information.sysPhone" placeholder="请输入联系电话"></el-input>
+                        <el-input v-model="information.sysPhone" placeholder="请输入联系电话"></el-input>
                     </el-form-item>
                     <el-form-item label="官网链接" prop="sysWebsite">
                         <el-input v-model="information.sysWebsite" placeholder="请输入链接"></el-input>
@@ -285,7 +290,6 @@ export default {
                 ],
                 sysPhone:[
                     {required: true, message: '手机号不能为空', trigger: 'blur'},
-                    { type: 'number', message: '手机号必须为数字值',trigger: 'blur'}
                 ],
                 sysEmail:[
                     {required: true, message: '邮箱不能为空', trigger: 'blur'},

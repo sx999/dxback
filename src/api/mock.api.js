@@ -30,6 +30,8 @@ export const APIROUTER = {
         'industry':api+'/NewsController/',
         //解决方案
         'solution':api+'/SchoolController/',
+        //解决方案菜单
+        'solutionmenu':api+'/MenuController/',
          //轮播图
         'banner':api+'/RotationController/',
    
