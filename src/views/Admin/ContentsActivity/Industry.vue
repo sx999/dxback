@@ -26,9 +26,14 @@
                 :data="ftableData"
                 :default-sort = "{prop: 'newsDate', order: 'descending'}"
                 border
-                max-height="540"
+                max-height="570"
                 size="small"
                 style="width: 100%">
+                    <el-table-column
+                        label="序号"
+                        type="index"
+                        width="100">
+                    </el-table-column>
                     <el-table-column
                         prop="newsID"
                         label="ID"
@@ -40,11 +45,6 @@
                         label="发布时间"
                         width="160">
                     </el-table-column>
-                    <!-- <el-table-column
-                        prop="newsDate"
-                        label="发布时间"
-                        width="160">
-                    </el-table-column> -->
                     <el-table-column
                         prop="newsTitle"
                         label="新闻标题"
@@ -57,11 +57,11 @@
                         label="新闻描述"
                         width="300">
                     </el-table-column>
-                    <el-table-column
+                    <!-- <el-table-column
                         prop="newsRate"
                         label="新闻级别"
                         width="100">
-                    </el-table-column>
+                    </el-table-column> -->
                     <el-table-column
                         prop="newsContent"
                         label="新闻内容"
@@ -156,7 +156,7 @@
                     <el-form-item label="发布时间" prop="newsDate" required>
                         <el-date-picker type="date" placeholder="选择日期" v-model="information.newsDate" style="width: 50%;"></el-date-picker>
                     </el-form-item>
-                    <el-form-item label="上传图片" class="block">
+                    <el-form-item label="上传封面图" class="block">
                         <input class="file-input" type="file" @change="updateFace($event)" ref="inputer0"  multiple accept="image/png,image/jpeg,image/jpg"/>
                     </el-form-item>
                     <el-form-item label="预览图片" prop="newsImagePath">
@@ -179,7 +179,7 @@
                     <el-button class="backg" type="primary" size="small"  icon="el-icon-check" @click="Affirm1('information')">保 存</el-button>
                 </span>
             </el-dialog>
-            <div class="block">
+            <div class="block-bottom">
                 <el-pagination
                 @current-change="getLista($event)"
                 :current-page="this.pageData.currentPage"
@@ -317,9 +317,9 @@ export default {
                     .then(res=>{
                         console.log(res)
                         if(res.data.code == 200){
-                            this.$Message.success('添加成功!');
-                            this.Queryall()
                             this.dialogVisibles = false
+                            this.Queryall()
+                            this.$Message.success('添加成功!');
                         }else{
                             this.$Message.warning(res.data.msg);
                         }
@@ -444,7 +444,7 @@ export default {
         /* margin-right: 50px; */
         /* float: right; */
     }
-    .boxdetail .block{
+    .boxdetail .block-bottom{
         position: fixed;
         bottom: 30px;
         left: 200px;

@@ -1,5 +1,8 @@
 <template>
     <div>
+        <el-link type="primary" :underline="false" :href="url"  target="_blank" class="cell">
+                  <h2 style="marginBottom:20px">点我查看修改模块</h2>  
+        </el-link>
         <el-breadcrumb separator="/">
             <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
             <el-breadcrumb-item :to="{ path: '/product/' }"><a href="javascript:;">产品详情</a></el-breadcrumb-item>
@@ -39,6 +42,20 @@
                         width="200">
                     </el-table-column>
                     <el-table-column
+                        prop="menuId"
+                        label="标签"
+                        width="100">
+                        <template slot-scope="scope">
+                            <el-tag  v-if="scope.row.menuId == '1468031341705560064'">门禁系统</el-tag>
+                            <el-tag type="success" v-if="scope.row.menuId == '1468031300236476416'">智慧校服</el-tag>
+                            <el-tag type="info" v-if="scope.row.menuId == '1468031262353522688'">智慧教室</el-tag>
+                            <el-tag type="warning" v-if="scope.row.menuId == '1468031213334691840'">录播教室</el-tag>
+                            <el-tag type="danger" v-if="scope.row.menuId == '1468031189821423616'">互动课堂</el-tag>
+                            <el-tag  color="#7bbfea" style="color:#ffffff;" v-if="scope.row.menuId == '1468031117746503680'">智慧照明</el-tag>
+                            <el-tag color="#77ac98" style="color:#FFFFFF;" v-if="scope.row.menuId == '1468031086788345856'">智慧图书馆</el-tag>
+                        </template>
+                        </el-table-column>
+                    <el-table-column
                         prop="schoolHeadline"
                         label="标题"
                         width="250"
@@ -51,18 +68,22 @@
                         show-overflow-tooltip>
                     </el-table-column>   
                     <el-table-column
-                        label="图片"
+                        label="顶部大图链接"
                         show-overflow-tooltip
                         min-width="200">
                         <template slot-scope="scope">
-                            <el-link type="primary" :underline="false" :href="scope.row.schoolPic"  target="_blank" class="cell">
+                             <el-popover trigger="hover" placement="bottom" width="240">
                                 <el-image
-                                    style="width: 40%; height: 40%"
                                     :src="scope.row.schoolPic"
                                     :fit="fits.contain"
                                    >
                                 </el-image>
-                            </el-link>
+                                <div slot="reference" class="name-wrapper">
+                                    <el-link type="primary" :underline="false" :href="scope.row.schoolPic"  target="_blank" class="cell">
+                                        {{scope.row.schoolPic}}
+                                    </el-link>
+                                </div>
+                            </el-popover>
                         </template> 
                     </el-table-column>
                     <el-table-column 
@@ -72,8 +93,7 @@
                     <template slot-scope="scope">
                         <el-button
                         size="mini"
-                        disabled
-                        @click="handlelook(scope.$index,tableData)">查看</el-button>
+                        @click="handleEdit(scope.$index,tableData)">编辑</el-button>
                         <el-button
                         size="mini"
                         type="danger"
@@ -88,9 +108,26 @@
             width="50%" 
             :before-close="handleDialogClose"
             :close-on-click-modal="false">
-                <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm">
-                    <el-form-item label="菜单名称" prop="menuName">
-                        <el-input v-model="ruleForm.menuName" placeholder="请输入菜单名称"></el-input>
+                <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
+                    <el-form-item label="标题" prop="schoolHeadline">
+                        <el-input v-model="ruleForm.schoolHeadline" placeholder="请输入标题"></el-input>
+                    </el-form-item>
+                    <el-form-item label="内容" prop="schoolDetails">
+                        <quill-editor 
+                            v-model="ruleForm.schoolDetails" 
+                            ref="myQuillEditor" 
+                            :options="editorOption" 
+                            @blur="onEditorBlur($event)" @focus="onEditorFocus($event)"
+                            @change="onEditorChange($event)">
+                        </quill-editor> 
+                    </el-form-item>
+                    <el-form-item label="图片(顶部大图)" class="block">
+                        <input class="file-input" type="file" @change="updateFace($event)" ref="inputer0"  multiple accept="image/png,image/jpeg,image/jpg"/>
+                    </el-form-item>
+                    <el-form-item label="预览">
+                        <el-link type="success" :underline="false" :href="ruleForm.schoolPic"  target="_blank">
+                            <img :src="ruleForm.schoolPic" alt="" width="200" class="block-image">
+                        </el-link>
                     </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
@@ -98,7 +135,7 @@
                     <el-button class="backg" type="primary" size="small"  icon="el-icon-check" @click="Affirm('ruleForm')">确 定</el-button>
                 </span>
             </el-dialog>
-            <!-- 添加框 -->
+            <!-- 添加框 (无用) -->
             <el-dialog class="dialog" title="正在添加...." 
             :visible.sync="dialogVisibles" 
             width="50%" 
@@ -121,11 +158,14 @@
 export default {
     data(){
         return{
+            url:"https://dxkj2021-1306445192.cos.ap-nanjing.myqcloud.com/duxiu/62721638934883042.png",
+
             loading:false, //加载动画
             dialogVisible:false,  //详情框
             dialogVisibles:false,  //添加框
             timer: null,  // 定时器名称
             tableData:[],
+            editorOption:{},
             information:{   //添加数组
                 menuLogo:"",
                 menuName:"",
@@ -133,12 +173,20 @@ export default {
             search:{
                 menuName:""
             },
+            // addinform:{
+            //     schoolHeadline:"",
+            //     schoolDetails:"",
+            //     schoolPic:""
+            // },
             ruleForm:{},
             rules: {
-                menuName:[
-                    {required: true, message: '菜单名称不能为空', trigger: 'blur'},
-                    { min: 4, max: 10, message: '长度在 4 到 10 个字符', trigger: 'blur' }
+                schoolHeadline:[
+                    {required: true, message: ' 标题不能为空', trigger: 'blur'},
+                    { min: 4, max: 50, message: '长度在 4 到 50 个字符', trigger: 'blur' }
                 ],
+                schoolDetails:[
+                    {required: true, message: '内容不能为空', trigger: 'blur'},
+                ]
                
             },
             fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
@@ -217,7 +265,7 @@ export default {
              this.$refs[form].validate((valid) => {
                 if(valid) {
                     this.ruleForm.updateTime = new Date()
-                    this.axios.post(this.$api_router.solutionmenu+'updateOne',this.ruleForm)
+                    this.axios.post(this.$api_router.solution+'updateOne',this.ruleForm)
                     .then(res=>{
                         if(res.data.code == 200){
                             this.$Message.success('修改成功!');
@@ -287,6 +335,12 @@ export default {
         },
         handlelook(index,row){
             console.log(row[index])
+        },
+        onEditorBlur(){//失去焦点事件
+        },
+        onEditorFocus(){//获得焦点事件
+        },
+        onEditorChange(){//内容改变事件
         }
     }
 }

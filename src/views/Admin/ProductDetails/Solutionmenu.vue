@@ -30,7 +30,7 @@
                 style="width: 100%">
                     <el-table-column
                         prop="menuId"
-                        label="ID"
+                        label="菜单ID"
                         width="180">
                     </el-table-column>
                     <el-table-column
@@ -55,7 +55,7 @@
                         <el-button
                         size="mini"
                         type="info"
-                        @click="handleAdd(scope.$index,tableData)">编辑内容</el-button>
+                        @click="handleAdd(scope.$index,tableData)">添加内容</el-button>
                         <el-button
                         size="mini"
                         type="danger"
@@ -103,7 +103,7 @@
             width="50%" 
             :before-close="handleDialogClose"
             :close-on-click-modal="false">
-                <el-form :model="addinform" :rules="rules1" ref="addinform" label-width="120px" class="demo-ruleForm">
+                <el-form :model="addinform" :rules="rules1" ref="addinform" label-width="130px" class="demo-ruleForm">
                     <el-form-item label="标题" prop="schoolHeadline">
                         <el-input v-model="addinform.schoolHeadline" placeholder="请输入标题"></el-input>
                     </el-form-item>
@@ -116,12 +116,12 @@
                             @change="onEditorChange($event)">
                         </quill-editor> 
                     </el-form-item>
-                    <el-form-item label="上传图片(可不传)" class="block">
+                    <el-form-item label="图片(顶部大图)" class="block">
                         <input class="file-input" type="file" @change="updateFace($event)" ref="inputer0"  multiple accept="image/png,image/jpeg,image/jpg"/>
                     </el-form-item>
                     <el-form-item label="预览">
                         <el-link type="success" :underline="false" :href="addinform.schoolPic"  target="_blank">
-                            <img :src="addinform.schoolPic" alt="" width="100" class="block-image">
+                            <img :src="addinform.schoolPic" alt="" width="200" class="block-image">
                         </el-link>
                     </el-form-item>
                 </el-form>
@@ -172,7 +172,7 @@ export default {
             rules1: {
                 schoolHeadline:[
                     {required: true, message: ' 标题不能为空', trigger: 'blur'},
-                    { min: 5, max: 50, message: '长度在 5 到 50 个字符', trigger: 'blur' }
+                    { min: 4, max: 50, message: '长度在 4 到 50 个字符', trigger: 'blur' }
                 ],
                 schoolDetails:[
                     {required: true, message: '内容不能为空', trigger: 'blur'},
@@ -278,6 +278,9 @@ export default {
             var id = row[index].menuId
             this.dialogVisibles1 = true
             this.addinform.menuId = id
+            this.addinform.schoolHeadline="",
+            this.addinform.schoolDetails="",
+             this.addinform.schoolPic=""
             // this.axios.post(this.$api_router.solution+'findMenuId?menuId='+id)
             // .then(res=>{
             //     console.log(res)
