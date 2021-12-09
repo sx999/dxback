@@ -79,7 +79,7 @@
                           <el-menu-item index="/picture/brochure">宣传册</el-menu-item>
                           <el-menu-item index="/picture/banner">轮播图</el-menu-item>
                       </el-submenu>
-                       <el-menu-item index="/system">
+                      <el-menu-item index="/system">
                           <i class="el-icon-setting"></i>
                           <span slot="title">系统配置</span>
                       </el-menu-item>
