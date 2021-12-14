@@ -47,7 +47,7 @@
                         width="100">
                         <template slot-scope="scope">
                             <el-tag  v-if="scope.row.menuId == '1468031341705560064'">门禁系统</el-tag>
-                            <el-tag type="success" v-if="scope.row.menuId == '1468031300236476416'">智慧校服</el-tag>
+                            <el-tag type="success" v-if="scope.row.menuId == '1468031300236476416'">宿管系统</el-tag>
                             <el-tag type="info" v-if="scope.row.menuId == '1468031262353522688'">智慧教室</el-tag>
                             <el-tag type="warning" v-if="scope.row.menuId == '1468031213334691840'">录播教室</el-tag>
                             <el-tag type="danger" v-if="scope.row.menuId == '1468031189821423616'">互动课堂</el-tag>
@@ -67,7 +67,7 @@
                         width="300"
                         show-overflow-tooltip>
                     </el-table-column>   
-                    <el-table-column
+                    <!-- <el-table-column
                         label="顶部大图链接"
                         show-overflow-tooltip
                         min-width="200">
@@ -85,7 +85,7 @@
                                 </div>
                             </el-popover>
                         </template> 
-                    </el-table-column>
+                    </el-table-column> -->
                     <el-table-column 
                     fixed="right"
                     label="操作"
@@ -121,7 +121,7 @@
                             @change="onEditorChange($event)">
                         </quill-editor> 
                     </el-form-item>
-                    <el-form-item label="图片(顶部大图)" class="block">
+                    <el-form-item label="顶部大图(可不传)" class="block">
                         <input class="file-input" type="file" @change="updateFace($event)" ref="inputer0"  multiple accept="image/png,image/jpeg,image/jpg"/>
                     </el-form-item>
                     <el-form-item label="预览">
@@ -193,8 +193,8 @@ export default {
             file:""
         }
     },
-    created(){},
-    mounted(){this.Queryall()},
+    created(){this.Queryall()},
+    mounted(){},
     computed:{
          //过滤
 		"ftableData":function(){	

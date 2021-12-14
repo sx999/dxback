@@ -55,18 +55,18 @@
                         prop="newsDesc"
                         show-overflow-tooltip
                         label="新闻描述"
-                        width="300">
+                        width="400">
                     </el-table-column>
                     <!-- <el-table-column
                         prop="newsRate"
                         label="新闻级别"
                         width="100">
                     </el-table-column> -->
-                    <el-table-column
+                    <!-- <el-table-column
                         prop="newsContent"
                         label="新闻内容"
                         width="300">
-                    </el-table-column>
+                    </el-table-column> -->
                     <el-table-column
                         label="封面图片链接"
                         show-overflow-tooltip
@@ -220,7 +220,7 @@ export default {
             rules: {
                 newsTitle:[
                     {required: true, message: '标题不能为空', trigger: 'blur'},
-                    { min: 5, max: 30, message: '长度在 5 到 30 个字符', trigger: 'blur' }
+                    { min: 5, max: 100, message: '长度在 5 到 100 个字符', trigger: 'blur' }
                 ],
                 newsDesc:[
                     {required: true, message: '简述不能为空', trigger: 'blur'}
@@ -264,7 +264,7 @@ export default {
             console.log(event)
              this.axios.post(this.$api_router.industry+'list?currentPage='+event+'&limit=8')
             .then(res=>{
-                console.log(res)
+                // console.log(res)
                 if(res.data.code == 200){
 						this.tableData =  res.data.data.page.dataList
                         this.pageData =  res.data.data.page
@@ -333,7 +333,15 @@ export default {
         //点击编辑
         handleEdit(index,row){
             this.dialogVisible = true
-            this.ruleForm = row[index]
+            this.axios.post(this.$api_router.industry+'findAllId?newsID='+row[index].newsID)
+             .then(res=>{
+                 console.log(res)
+                 if(res.data.code == 200){
+                      this.ruleForm =res.data.data
+                 }else{
+                     return false
+                 }
+             })
         },
         //确认修改
         Affirm(form){
