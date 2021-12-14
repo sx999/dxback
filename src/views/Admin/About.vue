@@ -1,30 +1,17 @@
 <template>
-  <div class="fullPage" ref="fullPage">
-    <div
-      class="fullPageContainer"
-      ref="fullPageContainer"
-      @mousewheel="mouseWheelHandle"
-      @DOMMouseScroll="mouseWheelHandle"
-    >
-      <div class="section section1">1</div>
-      <div class="section section2">2</div>
-      <div class="section section3">3</div>
-      <div class="section section4">4</div>
-    </div>
+  <div>
+      <Editor></Editor>
   </div>
 </template>
 <script>
+import Editor from '../../components/Editor.vue'
 export default {
-  name: "Home",
   data() {
     return {
-      fullpage: {
-        current: 1, // 当前的页面编号
-        isScrolling: false, // 是否在滚动,是为了防止滚动多页，需要通过一个变量来控制是否滚动
-        deltaY: 0  // 返回鼠标滚轮的垂直滚动量，保存的鼠标滚动事件的deleteY,用来判断是往下还是往上滚
-      }
+      
     };
   },
+  components:{Editor},
   methods: {
     next() { // 往下切换
       let len = 4; // 页面的个数
