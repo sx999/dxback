@@ -304,7 +304,6 @@ export default {
             },
             fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
             file:"",
-            content: this.value,
             quillUpdateImg: false, // 根据图片上传状态来确定是否显示loading动画，刚开始是false,不显示
             editorOption: {
             placeholder: "",
@@ -343,7 +342,7 @@ export default {
     },
     components: {
         quillEditor
-   },
+    },
     created(){},
     mounted(){this.Queryall()},
     computed:{
